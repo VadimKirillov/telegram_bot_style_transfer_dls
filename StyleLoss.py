@@ -67,7 +67,7 @@ class Style_transfer:
                              "conv_4": 0.2,
                              "conv_5": 0.2}
 
-        self.cnn = models.vgg19(pretrained=True).features.to(self.device).eval()
+        self.cnn = models.vgg19().features.to(self.device).eval()
 
         self.busy = 0
         self.last_sl = 100
