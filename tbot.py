@@ -117,8 +117,8 @@ async def handle_content_input_nst(message: types.message, state: FSMContext):
         content = message.photo[-1]
         style = data["style"]
 
-        style_path = f"images/{style.file_id}.jpg"
-        content_path = f"images/{content.file_id}.jpg"
+        style_path = f"images/style/{style.file_id}.png"
+        content_path = f"images/content/{content.file_id}.png"
 
         await style.download(destination_file=style_path)
         await content.download(destination_file=content_path)
@@ -129,6 +129,10 @@ async def handle_content_input_nst(message: types.message, state: FSMContext):
         task_queue.put(task)
 
         await state.finish()
+        await bot.send_chat_action(message.chat.id, ChatActions.TYPING)
+
+
+
     else:
         await message.answer(GETTING_CONTENT_ERROR_MESSAGE)
 
@@ -183,6 +187,9 @@ async def get_text(message):
 async def send_result(chat_id):
     # await bot.send_photo(chat_id, open("images/result/res.jpg", "rb"), FINISHED_MESSAGE)
     await bot.send_message(chat_id, FINISHED_MESSAGE)
+    with open('target' + str(chat_id) + '.png', 'rb') as photo:
+        await bot.send_photo(chat_id, photo,
+                             caption='Получите и распишитесь!')
 
 
 def queue_loop():
@@ -190,8 +197,12 @@ def queue_loop():
         if not task_queue.empty():
             task = task_queue.get()
             if task["type"] == "st":
-                time.sleep(5)
-                print(1)
+                x = threading.Thread(target=st.style_transfer_train,
+                                     args=(task["content"], task["style"], task["id"]))
+                x.start()  # делаем style transfer
+                while st.busy == 1:
+                    time.sleep(2)
+
                 # nst.run(task["style"], task["content"])
             else:
                 print(2)

@@ -45,8 +45,8 @@ class Normalization(nn.Module):
         # .view the mean and std to make them [C x 1 x 1] so that they can
         # directly work with image Tensor of shape [B x C x H x W].
         # B is batch size. C is number of channels. H is height and W is width.
-        self.mean = torch.tensor(mean).view(-1, 1, 1)
-        self.std = torch.tensor(std).view(-1, 1, 1)
+        self.mean = mean.clone().detach().view(-1, 1, 1)
+        self.std = std.clone().detach().view(-1, 1, 1)
 
     def forward(self, img):
         # normalize img
@@ -151,7 +151,7 @@ class Style_transfer:
         self.busy = 1
 
         imsize = 512
-        num_steps = 400
+        num_steps = 200
         style_weight = 100000
         content_weight = 1
 
@@ -222,8 +222,9 @@ class Style_transfer:
 
         input_img = min_img
         # input_img = self.imcnvt(input_img)
-        plt.imsave('target' + user_id + '.png', input_img, format='png')
-
+        plt.imsave('images/target/' + str(user_id) + '.png', input_img, format='png')
+        print("Готово")
+        print()
         self.busy = 0
 
         return
