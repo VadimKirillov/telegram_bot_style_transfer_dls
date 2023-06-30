@@ -6,6 +6,6 @@ class ST_States(StatesGroup):
     waiting_for_content = State()
 
 
-class GAN_States(StatesGroup):
+class Standart_Styles_States(StatesGroup):
     waiting_for_style = State()
     waiting_for_content = State()

@@ -67,14 +67,15 @@ class NormalizationLayer(nn.Module):
 
 class NSTModel:
     def __init__(self, style_image, content_image):
+        global name
         self.style = style_image
         self.content = content_image
         self.style_losses = []
         self.content_losses = []
 
-        logging.warning("Creating VGG19 model...")
+        logging.info("Creating VGG19 model...")
         feature_extractor = models.vgg19().features.to(device)
-        logging.warning("Loading VGG19 weights...")
+        logging.info("Loading VGG19 weights...")
         feature_extractor.load_state_dict(torch.load("vgg19weights"))
         feature_extractor.eval()
 
@@ -88,7 +89,7 @@ class NSTModel:
         content_layers = ["conv_4"]
         style_layers = ["conv_1", "conv_2", "conv_3", "conv_4", "conv_5"]
 
-        logging.warning("Rearranging VGG19 model...")
+        logging.info("Rearranging VGG19 model...")
         i = 0
         for layer in feature_extractor.children():
             if isinstance(layer, nn.Conv2d):
@@ -118,14 +119,14 @@ class NSTModel:
                 break
 
         self.model = self.model[:(i + 1)].requires_grad_(False)
-        logging.warning("Model is ready!")
+        logging.info("Model is ready!")
 
-    def fit(self, num_epochs=500, content_weight=1, style_weight=1000000):
+    def fit(self, num_epochs=400, content_weight=1, style_weight=1000000):
         target = self.content.clone().requires_grad_(True).to(device)
         optimizer = optim.LBFGS([target])
 
         epoch = [0]
-        logging.warning("Starting style transfer process...")
+        logging.info("Starting style transfer process...")
         while epoch[0] <= num_epochs:
             def get_loss():
                 with torch.no_grad():
@@ -149,8 +150,8 @@ class NSTModel:
 
                 epoch[0] += 1
                 if epoch[0] % 50 == 0:
-                    logging.warning(f"epoch {epoch}:")
-                    logging.warning(f"Style Loss : {style_score.item():4f} Content Loss: {content_score.item():4f}")
+                    logging.info(f"epoch {epoch}:")
+                    logging.info(f"Style Loss : {style_score.item():4f} Content Loss: {content_score.item():4f}")
                 gc.collect()
                 return style_score + content_score
 
@@ -168,9 +169,9 @@ def run(style_image_path, content_image_path):
 
     nst_model = NSTModel(style_image=style_img, content_image=content_img)
     output = nst_model.fit()
-    logging.warning("Image ready, saving...")
+    logging.info("Image ready, saving...")
     save_image(output, "images/target/res.jpg")
-    logging.warning("Image saved!")
+    logging.info("Image saved!")
 
     gc.collect()
     del nst_model
