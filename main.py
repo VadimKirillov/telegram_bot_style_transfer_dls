@@ -66,10 +66,10 @@ async def choose_button_nst_command(call: types.CallbackQuery):
 @dp.message_handler(commands=["styles"])
 async def choose_style_command(message: types.Message):
     media = types.MediaGroup()
-    media.attach_photo(types.InputFile('standart_stiles/dali.png'), '1')
-    media.attach_photo(types.InputFile('standart_stiles/matiss.png'), '2')
-    media.attach_photo(types.InputFile('standart_stiles/picasso.png'), '3')
-    media.attach_photo(types.InputFile('standart_stiles/van_gog.png'), '4')
+    media.attach_photo(types.InputFile('standart_styles/dali.png'), '1')
+    media.attach_photo(types.InputFile('standart_styles/matiss.png'), '2')
+    media.attach_photo(types.InputFile('standart_styles/picasso.png'), '3')
+    media.attach_photo(types.InputFile('standart_styles/van_gog.png'), '4')
 
     await bot.send_media_group(message.chat.id, media=media)
     await message.answer(STANDART_STYLE_MESSAGE, reply_markup=PICK_STYLE_KB)
@@ -79,10 +79,10 @@ async def choose_style_command(message: types.Message):
 @dp.callback_query_handler(lambda c: c.data == "style")
 async def choose_button_style_command(call: types.CallbackQuery):
     media = types.MediaGroup()
-    media.attach_photo(types.InputFile('standart_stiles/dali.png'), '1')
-    media.attach_photo(types.InputFile('standart_stiles/matiss.png'), '2')
-    media.attach_photo(types.InputFile('standart_stiles/picasso.png'), '3')
-    media.attach_photo(types.InputFile('standart_stiles/van_gog.png'), '4')
+    media.attach_photo(types.InputFile('standart_styles/dali.png'), '1')
+    media.attach_photo(types.InputFile('standart_styles/matiss.png'), '2')
+    media.attach_photo(types.InputFile('standart_styles/picasso.png'), '3')
+    media.attach_photo(types.InputFile('standart_styles/van_gog.png'), '4')
 
     await bot.send_media_group(call.message.chat.id, media=media)
     await call.message.answer(STANDART_STYLE_MESSAGE, reply_markup=PICK_STYLE_KB)
@@ -139,15 +139,15 @@ async def handle_content_input_standart_style(message: types.message, state: FSM
 
         style = data["model"]
         if style == "style_dali":
-            style_path = f"standart_stiles/dali.png"
+            style_path = f"standart_styles/dali.png"
         elif style == "style_matiss":
-            style_path = f"standart_stiles/matiss.png"
+            style_path = f"standart_styles/matiss.png"
         elif style == "style_picasso":
-            style_path = f"standart_stiles/picasso.png"
+            style_path = f"standart_styles/picasso.png"
         elif style == "style_van_gog":
-            style_path = f"standart_stiles/van_gog.png"
+            style_path = f"standart_styles/van_gog.png"
         else:
-            style_path = f"standart_stiles/dali.png"
+            style_path = f"standart_styles/dali.png"
 
         img_24bit = cv2.imread(style_path)
         cv2.imwrite(f"images/style/{message.chat.id}.png", img_24bit)
