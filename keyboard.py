@@ -1,5 +1,3 @@
-from distutils import command
-
 from aiogram.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
 
 START_KB = ReplyKeyboardMarkup(resize_keyboard=True)
