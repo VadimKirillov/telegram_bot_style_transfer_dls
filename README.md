@@ -22,6 +22,12 @@ Bot link: `@StyleTransferDLSbot` (Telegram)
 
 Работу с ботом можно начать с команды /start. После приветственного сообщения у пользователя появляется меню доступных команд.
 
+<a href="url"><img src="bot_components/work_images/work1.jpg" align="center" height="600" width="300"></a>
+
 После использования команды /styles в меню под сообщением можно выбрать готовый стиль
 
+<a href="url"><img src="bot_components/work_images/work2.jpg" align="center" height="600" width="300"></a>
+
 Далее необходимо прислать боту изображение, на которое будет применён стиль. Через несколько минут бот пришлёт вам стилизованное изображение!
+
+<a href="url"><img src="bot_components/work_images/work3.jpg" align="center" height="600" width="300"></a>
