@@ -1,5 +1,5 @@
 # Style-Transfer-VGG19-Telegram-Bot
-Bot link: `@StyleTransferDLSbot` (Telegram)
+Cсылка на бота: `@StyleTransferDLSbot` (Telegram)
 
 ------------------------------------
 Данный бот реализован в качестве финального проекта в рамках курса [Deep Learning School by MIPT](https://en.dlschool.org/).
