@@ -76,7 +76,7 @@ class NSTModel:
         logging.info("Creating VGG19 model...")
         feature_extractor = models.vgg19().features.to(device)
         logging.info("Loading VGG19 weights...")
-        feature_extractor.load_state_dict(torch.load("vgg19weights"))
+        feature_extractor.load_state_dict(torch.load("models/vgg19weights"))
         feature_extractor.eval()
 
         normalization_mean = torch.tensor([0.485, 0.456, 0.406]).to(device)

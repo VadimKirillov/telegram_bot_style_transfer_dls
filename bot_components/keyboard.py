@@ -17,7 +17,7 @@ HELP_KB.add(
 
 
 PICK_STYLE_KB = InlineKeyboardMarkup()
-PICK_STYLE_KB.add(InlineKeyboardButton("1) Дали", callback_data="1"))
+PICK_STYLE_KB.add(InlineKeyboardButton("1) Кальзадо", callback_data="1"))
 PICK_STYLE_KB.add(InlineKeyboardButton("2) Матисс", callback_data="2"))
 PICK_STYLE_KB.add(InlineKeyboardButton("3) Пикассо", callback_data="3"))
 PICK_STYLE_KB.add(InlineKeyboardButton("4) Ван Гог", callback_data="4"))

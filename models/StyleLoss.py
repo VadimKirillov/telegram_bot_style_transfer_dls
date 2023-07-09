@@ -5,12 +5,9 @@ import torch.optim as optim
 from torchvision import transforms, models
 from PIL import Image
 import matplotlib.pyplot as plt
-import numpy as np
-import threading
-import os
 import copy
 
-from ContentLoss import ContentLoss
+from models.ContentLoss import ContentLoss
 
 
 def gram_matrix(input):

@@ -12,13 +12,13 @@ from aiogram.types import ChatActions, ContentType
 import threading
 import os
 
-import nst
-from StyleLoss import Style_transfer
-from keyboard import START_KB, HELP_KB, PICK_STYLE_KB
-from messages import START_MESSAGE, HELP_MESSAGE, ST_MESSAGE, CANCEL_MESSAGE, WAITING_FOR_CONTENT_MESSAGE, \
+from models import nst
+from models.StyleLoss import Style_transfer
+from bot_components.keyboard import START_KB, HELP_KB, PICK_STYLE_KB
+from bot_components.messages import START_MESSAGE, HELP_MESSAGE, ST_MESSAGE, CANCEL_MESSAGE, WAITING_FOR_CONTENT_MESSAGE, \
     GETTING_STYLE_ERROR_MESSAGE, PROCESSING_MESSAGE, GETTING_CONTENT_ERROR_MESSAGE, FINISHED_MESSAGE, \
     STANDART_STYLE_MESSAGE
-from states import ST_States, Standart_Styles_States
+from bot_components.states import ST_States, Standart_Styles_States
 
 API_TOKEN = os.environ.get('API_TOKEN')
 
@@ -66,7 +66,7 @@ async def choose_button_nst_command(call: types.CallbackQuery):
 @dp.message_handler(commands=["styles"])
 async def choose_style_command(message: types.Message):
     media = types.MediaGroup()
-    media.attach_photo(types.InputFile('standart_styles/dali.png'), '1')
+    media.attach_photo(types.InputFile('standart_styles/calzado.png'), '1')
     media.attach_photo(types.InputFile('standart_styles/matiss.png'), '2')
     media.attach_photo(types.InputFile('standart_styles/picasso.png'), '3')
     media.attach_photo(types.InputFile('standart_styles/van_gog.png'), '4')
@@ -79,7 +79,7 @@ async def choose_style_command(message: types.Message):
 @dp.callback_query_handler(lambda c: c.data == "style")
 async def choose_button_style_command(call: types.CallbackQuery):
     media = types.MediaGroup()
-    media.attach_photo(types.InputFile('standart_styles/dali.png'), '1')
+    media.attach_photo(types.InputFile('standart_styles/calzado.png'), '1')
     media.attach_photo(types.InputFile('standart_styles/matiss.png'), '2')
     media.attach_photo(types.InputFile('standart_styles/picasso.png'), '3')
     media.attach_photo(types.InputFile('standart_styles/van_gog.png'), '4')
@@ -99,11 +99,11 @@ async def cancel_action_command(message: types.Message, state: FSMContext):
 
 
 @dp.callback_query_handler(lambda c: c.data == "1", state=Standart_Styles_States.waiting_for_style)
-async def process_callback_dali(callback_query: types.CallbackQuery, state: FSMContext):
+async def process_callback_calzado(callback_query: types.CallbackQuery, state: FSMContext):
     await bot.answer_callback_query(callback_query.id)
     await Standart_Styles_States.waiting_for_content.set()
-    await bot.send_message(callback_query.from_user.id, "Вы выбрали стиль Дали.\nЖду изображение.")
-    await state.update_data(model="style_dali")
+    await bot.send_message(callback_query.from_user.id, "Вы выбрали стиль Кальзадо.\nЖду изображение.")
+    await state.update_data(model="style_calzado")
 
 
 @dp.callback_query_handler(lambda c: c.data == "2", state=Standart_Styles_States.waiting_for_style)
@@ -138,8 +138,8 @@ async def handle_content_input_standart_style(message: types.message, state: FSM
         content = message.photo[-1]
 
         style = data["model"]
-        if style == "style_dali":
-            style_path = f"standart_styles/dali.png"
+        if style == "style_calzado":
+            style_path = f"standart_styles/calzado.png"
         elif style == "style_matiss":
             style_path = f"standart_styles/matiss.png"
         elif style == "style_picasso":
@@ -147,7 +147,7 @@ async def handle_content_input_standart_style(message: types.message, state: FSM
         elif style == "style_van_gog":
             style_path = f"standart_styles/van_gog.png"
         else:
-            style_path = f"standart_styles/dali.png"
+            style_path = f"standart_styles/van_gog.png"
 
         img_24bit = cv2.imread(style_path)
         cv2.imwrite(f"images/style/{message.chat.id}.png", img_24bit)
