@@ -51,14 +51,19 @@ async def send_help(message):
     )
 
 
-@dp.message_handler(commands=["nst"])
-async def choose_nst_command(message: types.Message):
+@dp.message_handler(commands=["transfer_style"], state="*")
+async def choose_nst_command(message: types.Message, state: FSMContext):
+    current_state = await state.get_state()
+    if current_state is None:
+        return
+
     await ST_States.waiting_for_style.set()
     await message.answer(ST_MESSAGE)
 
 
-@dp.callback_query_handler(lambda c: c.data == "nst")
+@dp.callback_query_handler(lambda c: c.data == "transfer_style")
 async def choose_button_nst_command(call: types.CallbackQuery):
+
     await ST_States.waiting_for_style.set()
     await bot.send_message(call.message.chat.id, ST_MESSAGE)
 

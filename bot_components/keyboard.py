@@ -1,7 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
 
 START_KB = ReplyKeyboardMarkup(resize_keyboard=True)
-START_KB.add("/nst")
+START_KB.add("/transfer_style")
 START_KB.add("/styles")
 START_KB.add("/help")
 START_KB.add("/cancel")
@@ -9,7 +9,7 @@ START_KB.add("/cancel")
 
 HELP_KB = InlineKeyboardMarkup()
 HELP_KB.add(
-    InlineKeyboardButton("Перенос своего стиля", callback_data="nst")
+    InlineKeyboardButton("Перенос своего стиля", callback_data="transfer_style")
 )
 HELP_KB.add(
     InlineKeyboardButton("Готовые стили", callback_data="style")
